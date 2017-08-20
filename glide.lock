@@ -1,0 +1,10 @@
+hash: 12b6c16e2652ddecd179a36aef9ea84d2e32f77b562f9d04380833a8c1b3f327
+updated: 2017-08-20T18:38:40.293689051+08:00
+imports:
+- name: github.com/gin-gonic/gin
+  version: d459835d2b077e44f7c9b453505ee29881d5d12d
+- name: gopkg.in/mgo.v2
+  version: 3f83fa5005286a7fe593b055f0d7771a7dce4655
+  subpackages:
+  - bson
+testImports: []
