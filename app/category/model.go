@@ -1,17 +1,29 @@
 package category
 
-type CategoryID bson.ObjectID
+import (
+	"time"
 
-type CategoryStatus int
-
-const (
-	Active CategoryStatus = iota
-	Delete
+	"github.com/honpery-com/be-api/app/user"
+	"gopkg.in/mgo.v2/bson"
 )
 
-// type Category struct {
-// 	Id       CategoryID `json:"_id" bson:"_id"`
-// 	Name     string     `json:"name" bson:"name"`
-// 	CraeteAt time.time  `json:"create_at" bson:"create_at"`
-// 	UpdateAt time.time  `json:"update_at" bson:"update_at"`
-// }
+const CategoryCell = "categories"
+
+type CategoryId bson.ObjectId
+
+type CategoryStatus string
+
+const (
+	CategoryStatusActive CategoryStatus = "active"
+	CategoryStatusDelete CategoryStatus = "delete"
+)
+
+type Category struct {
+	Id       CategoryId     `json:"_id" bson:"_id"`
+	Name     string         `json:"name" bson:"name"`
+	Desc     string         `json:"desc" bson:"desc"`
+	status   CategoryStatus `json:status bson:status`
+	Author   user.UserId    `json:"author" bson:"author"`
+	CraeteAt time.Timer     `json:"create_at" bson:"create_at"`
+	UpdateAt time.Timer     `json:"update_at" bson:"update_at"`
+}
