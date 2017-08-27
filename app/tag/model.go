@@ -3,27 +3,28 @@ package tag
 import (
 	"time"
 
+	. "../common"
 	"github.com/honpery-com/be-api/app/user"
 	"gopkg.in/mgo.v2/bson"
 )
 
-const TagCell = "tags"
+const TagColl CollName = "tags"
 
 type TagId bson.ObjectId
 
 type TagStatus string
 
 const (
-	TagStatusActive TagStatus = "active"
-	TagStatusDelete TagStatus = "delete"
+	Active TagStatus = "active"
+	Delete TagStatus = "delete"
 )
 
 type Tag struct {
-	Id       TagId       `json:"_id" bson:"_id"`
+	Id       TagId       `json:"_id" bson:"_id,omitempty"`
 	Name     string      `json:"name" bson:"name"`
 	Desc     string      `json:"desc" bson:"desc"`
 	Status   TagStatus   `json:"status" bson:"status"`
 	Author   user.UserId `json:"author" bson:"author"`
-	CreateAt time.Timer  `json:"create_at" bson:"create_at"`
-	UpdateAt time.Timer  `json:"update_at" bson:"update_at"`
+	CreateAt time.Time   `json:"create_at" bson:"create_at"`
+	UpdateAt time.Time   `json:"update_at" bson:"update_at"`
 }

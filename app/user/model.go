@@ -3,18 +3,19 @@ package user
 import (
 	"time"
 
+	. "../common"
 	"gopkg.in/mgo.v2/bson"
 )
 
-const UserColl = "users"
+const UserColl CollName = "users"
 
 type UserId bson.ObjectId
 
 type UserStatus string
 
 const (
-	UserStatusActive UserStatus = "active"
-	UserStatusDelete UserStatus = "delete"
+	Active UserStatus = "active"
+	Delete UserStatus = "delete"
 )
 
 type UserType string
@@ -24,7 +25,7 @@ const (
 )
 
 type User struct {
-	Id       UserId     `json:"_id" bson:"_id"`
+	Id       UserId     `json:"_id" bson:"_id,omitempty"`
 	Name     string     `json:"name" bson:"name"`
 	Desc     string     `json:"desc" bson:"desc"`
 	UserName string     `json:"username" bson:"username"`
@@ -32,6 +33,6 @@ type User struct {
 	Status   UserStatus `json:"status" bson:"status"`
 	Author   UserId     `json:"author" bson:"author"`
 	Type     UserType   `json:"type" bson:"type"`
-	CreateAt time.Timer `json:"create_at" bson:"create_at"`
-	UpdateAt time.Timer `json:"update_at" bson:"update_at"`
+	CreateAt time.Time  `json:"create_at" bson:"create_at"`
+	UpdateAt time.Time  `json:"update_at" bson:"update_at"`
 }
