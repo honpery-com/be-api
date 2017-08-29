@@ -1,98 +1,59 @@
 package common
 
 import (
-	"fmt"
+	"time"
 
-	. "github.com/honpery-com/be-api/config"
+	"github.com/gin-gonic/gin"
+	"github.com/honpery-com/be-api/app/user"
 	mgo "gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
-type CollName string
-
-func Connect(coll CollName) (error, *mgo.Session, *mgo.Collection) {
-	mongo_url := fmt.Sprintf("%s:%d", DBHost, DBPort)
-	session, err := mgo.Dial(mongo_url)
-
-	if err != nil {
-		return err, nil, nil
-	}
-
-	session.SetMode(mgo.Monotonic, true)
-	return nil, session, session.DB(DBName).C(string(coll))
+type BaseModel struct {
+	Id       bson.ObjectId `json:"_id" bson:"_id"`
+	Author   user.UserId   `json:"author" bson:"author"`
+	CreateAt time.Time     `json:"create_at" bson:"create_at"`
+	UpdateAt time.Time     `json:"update_at" bson:"update_at"`
 }
 
-type xmodel struct {
-	Name CollName
+type CollName = string
+
+type Model struct {
+	conn   *mgo.Collection
+	schema interface{}
 }
 
-func XModel(name CollName) xmodel {
-	return xmodel{Name: name}
+func XModel(c *gin.Context, name string) *Model {
+	model := Model{}
+
+	model.conn = c.MustGet("mgo_db").(*mgo.Database).C(name)
+
+	return &model
 }
 
-func (m xmodel) List(conditions interface{}) (error, interface{}) {
-	err, session, coll := Connect(m.Name)
-	defer session.Close()
-
-	if err != nil {
-		return err, nil
-	}
-
-	var _result interface{}
-
-	err = coll.Find(conditions).All(_result)
-
-	return err, _result
+func (m Model) List(coditions interface{}) (interface{}, error) {
+	var result []interface{}
+	err := m.conn.Find(coditions).All(&result)
+	return result, err
 }
 
-func (m xmodel) Detail(id string) (error, interface{}) {
-	err, session, coll := Connect(m.Name)
-	defer session.Close()
-
-	if err != nil {
-		return err, nil
-	}
-
-	var _result interface{}
-
-	err = coll.FindId(id).One(_result)
-
-	return err, _result
+func (m Model) Detail(id string) (interface{}, error) {
+	var result interface{}
+	err := m.conn.FindId(bson.ObjectIdHex(id)).One(&result)
+	return result, err
 }
 
-func (m xmodel) Create(doc interface{}) (error, interface{}) {
-	err, session, coll := Connect(m.Name)
-	defer session.Close()
+func (m Model) Create(newData interface{}) {
 
-	if err != nil {
-		return err, nil
-	}
-
-	err = coll.Insert(doc)
-
-	if err != nil {
-		return err, nil
-	}
-
-	return nil, doc
+	// newData.Id = bson.NewObjectId()
+	// newData.CraeteAt = time.Now()
+	// newData.UpdateAt = time.Now()
 }
 
-func (m xmodel) Update(id string, doc interface{}) (error, interface{}) {
-	err, session, coll := Connect(m.Name)
-	defer session.Close()
+func (m Model) Update() {
 
-	if err != nil {
-		return err, nil
-	}
-
-	err = coll.UpdateId(id, doc)
-
-	if err != nil {
-		return err, nil
-	}
-
-	return nil, doc
 }
 
-func (m xmodel) Delete(id string) {
+func (m Model) Delete() {
 
 }

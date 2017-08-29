@@ -4,18 +4,30 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	. "github.com/honpery-com/be-api/app/common"
 )
 
 func Router(router *gin.RouterGroup) {
 
 	router.GET("/categories", func(c *gin.Context) {
+		categories, err := Model(c).List(c.MustGet("xquery"))
 
+		if err != nil {
+			c.Error(err)
+			return
+		}
+
+		c.JSON(http.StatusOK, categories)
 	})
 
 	router.GET("/categories/:category_id", func(c *gin.Context) {
-		category_id := c.Param("category_id")
-		c.JSON(http.StatusOK, gin.H{"id": category_id})
+		category, err := Model(c).Detail(c.Param("category_id"))
+
+		if err != nil {
+			c.Error(err)
+			return
+		}
+
+		c.JSON(http.StatusOK, category)
 	})
 
 	router.POST("/categories", func(c *gin.Context) {
@@ -27,52 +39,43 @@ func Router(router *gin.RouterGroup) {
 			return
 		}
 
-		err, session, coll := Connect(CategoryColl)
+		category, err = Model(c).Create(category)
 
 		if err != nil {
 			c.Error(err)
 			return
 		}
 
-		defer session.Close()
-
-		err = coll.Insert(category)
-
-		if err != nil {
-			c.Error(err)
-		} else {
-			c.JSON(http.StatusOK, category)
-		}
-		// err, result := XModel(CategoryColl).Create(category)
-
-		// if err != nil {
-		// 	c.Error(err)
-		// } else {
-		// 	c.JSON(http.StatusOK, result)
-		// }
+		c.JSON(http.StatusOK, category)
 	})
 
 	router.PATCH("/categories/:category_id", func(c *gin.Context) {
 		category := Category{}
 		err := c.BindJSON(&category)
-		category_id := c.Param("category_id")
 
 		if err != nil {
 			c.Error(err)
 			return
 		}
 
-		err, result := XModel(CategoryColl).Update(category_id, category)
+		category, err = Model(c).Update(c.Param("category_id"), category)
 
 		if err != nil {
 			c.Error(err)
-		} else {
-			c.JSON(http.StatusOK, result)
+			return
 		}
+
+		c.JSON(http.StatusOK, category)
 	})
 
 	router.DELETE("/categories/:category_id", func(c *gin.Context) {
+		category, err := Model(c).Delete(c.Param("category_id"))
 
+		if err != nil {
+			c.Error(err)
+			return
+		}
+
+		c.JSON(http.StatusOK, category)
 	})
-
 }

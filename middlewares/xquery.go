@@ -4,6 +4,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Xquery(c *gin.Context) {
-	fmt.
+type Query struct {
+	limit int
+	skip  int
+}
+
+func Xquery() func(c *gin.Context) {
+	return func(c *gin.Context) {
+		query := Query{}
+		c.BindQuery(&query)
+		c.Set("xquery", query)
+		c.Next()
+	}
 }
