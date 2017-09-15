@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Xerr() func(c *gin.Context) {
+func Query() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Next()
 	}

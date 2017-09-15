@@ -4,11 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Xauth() func(*gin.Context) {
+func Error() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if c.Request.Method != "GET" {
-
-		}
 		c.Next()
 	}
 }

@@ -12,17 +12,14 @@ import (
 func main() {
 	router := gin.Default()
 
-	// auth handler.
-	router.Use(middlewares.Xauth())
-
 	// connect db.
 	router.Use(middlewares.Connect())
 
 	// query handler.
-	router.Use(middlewares.Xquery())
+	router.Use(middlewares.Query())
 
 	// error handler.
-	router.Use(middlewares.Xerr())
+	router.Use(middlewares.Error())
 
 	// v1 router.
 	app.V1(router)

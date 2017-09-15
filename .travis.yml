@@ -1,0 +1,16 @@
+language: go
+
+go:
+  - 1.9
+
+before_install:
+  - go get github.com/mattn/goveralls
+  - go get github.com/Masterminds/glide
+
+install:
+  - glide install -v
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always

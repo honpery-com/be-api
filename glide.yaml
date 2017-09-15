@@ -1,7 +1,4 @@
 package: github.com/honpery-com/be-api
 import:
-- package: gopkg.in/mgo.v2
-  subpackages:
-  - bson
 - package: github.com/gin-gonic/gin
-  version: ^1.2.0
+- package: github.com/lib/pq
