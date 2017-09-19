@@ -25,5 +25,4 @@ func Router(r *gin.RouterGroup) {
 	r.DELETE("/articles/:article_id", func(c *gin.Context) {
 
 	})
-
 }

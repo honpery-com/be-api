@@ -8,7 +8,7 @@ import (
 	"github.com/honpery-com/be-api/app/users"
 )
 
-func V1(router *gin.Engine) *gin.RouterGroup {
+func RegisterRouter(router *gin.Engine) *gin.RouterGroup {
 
 	V1Group := router.Group("/v1")
 	{

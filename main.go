@@ -6,14 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/honpery-com/be-api/app"
 	"github.com/honpery-com/be-api/config"
-	"github.com/honpery-com/be-api/middlewares"
 )
 
 func main() {
 	router := gin.Default()
-
-	// connect db.
-	router.Use(middlewares.Connect())
 
 	// query handler.
 	router.Use(middlewares.Query())
@@ -22,7 +18,7 @@ func main() {
 	router.Use(middlewares.Error())
 
 	// v1 router.
-	app.V1(router)
+	app.RegisterRouter(router)
 
 	router.Run(fmt.Sprintf(":%d", config.Port))
 }

@@ -1,7 +1,9 @@
 package config
 
-const DBHost = "localhost"
-
-const DBPort = 27017
-
-const DBName = "honpery_com"
+const (
+	DBHost = "127.0.0.1"
+	DBPort = 5432
+	DBUser = "honpery"
+	DBPwd  = "000000"
+	DBName = "honpery_com"
+)
