@@ -27,9 +27,11 @@ func TagModel(ctx *gin.Context) *Tag {
 func (m *Tag) List(conditions interface{}) (*[]Tag, error) {
 	tags := &[]Tag{}
 	query, err := m.db.Query("select * from tags")
+
 	if err != nil {
-		panic(err)
+		return tags, err
 	}
+
 	err = query.Scan(tags)
 	return tags, err
 }
@@ -39,3 +41,15 @@ func (m *Tag) Detail(id TagId) (*Tag, error) {
 	err := m.db.QueryRow("select * from tags where id = $1", id).Scan(tag)
 	return tag, err
 }
+
+// func (m *Tag) Create(newTag Tag) (*Tag, error) {
+
+// }
+
+// func (m *Tag) Update(id TagId, newTag Tag) (*Tag, error) {
+
+// }
+
+// func (m *Tag) Delete(id TagId) (*Tag, error) {
+
+// }

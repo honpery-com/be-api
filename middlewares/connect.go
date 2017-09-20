@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/honpery-com/be-api/config"
+	_ "github.com/lib/pq"
 )
 
 var DB *sql.DB
@@ -26,5 +27,9 @@ func Connect() func(*gin.Context) {
 		}
 
 		ctx.Set("DB", db)
+
+		ctx.Next()
+
+		db.Close()
 	}
 }
