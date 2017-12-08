@@ -10,5 +10,4 @@
 #### 模块
 - [ ] users
 - [ ] articles
-- [ ] categories
 - [ ] tags

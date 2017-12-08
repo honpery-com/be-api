@@ -1,28 +1,7 @@
 package main
 
-import (
-	"fmt"
-
-	"github.com/gin-gonic/gin"
-	"github.com/honpery-com/be-api/app"
-	"github.com/honpery-com/be-api/config"
-	"github.com/honpery-com/be-api/middlewares"
-)
+import "github.com/honpery-com/be-api/router"
 
 func main() {
-	router := gin.Default()
-
-	// connect db.
-	router.Use(middlewares.Connect())
-
-	// query handler.
-	router.Use(middlewares.Query())
-
-	// error handler.
-	router.Use(middlewares.Error())
-
-	// v1 router.
-	app.RegisterRouter(router)
-
-	router.Run(fmt.Sprintf(":%d", config.Port))
+	router.New().Run()
 }
