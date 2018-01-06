@@ -2,6 +2,9 @@ package model
 
 import "time"
 
+// ArticleID alias
+type ArticleID = string
+
 // ArticleStatus is int value
 type ArticleStatus = int
 
@@ -12,7 +15,7 @@ const (
 
 // Article entity struct
 type Article struct {
-	ID       string        `json:"_id"`
+	ID       ArticleID     `json:"_id"`
 	Title    string        `json:"title"`
 	Desc     string        `json:"desc"`
 	Body     string        `json:"body"`

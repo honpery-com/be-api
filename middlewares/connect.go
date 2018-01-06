@@ -5,13 +5,13 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com/honpery-com/be-api/config"
-	_ "github.com/lib/pq"
+	"github.com/honpery-com/be-api/db"
 )
 
 var DB *sql.DB
 
-func Connect() func(*gin.Context) {
+// Connect middleware
+func Connect() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		db, err := sql.Open("postgres", fmt.Sprintf(
 			"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",

@@ -1,7 +1,15 @@
 package main
 
-import "github.com/honpery-com/be-api/router"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/honpery-com/be-api/app"
+	_ "github.com/lib/pq"
+)
 
 func main() {
-	router.New().Run()
+	r := gin.Default()
+
+	app.NewRouter(r)
+
+	r.Run()
 }

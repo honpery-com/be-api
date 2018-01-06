@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// CoreQuery build in query conditions
 type CoreQuery struct {
 	skip     int
 	limit    int
@@ -14,15 +15,16 @@ type CoreQuery struct {
 	dateto   string
 }
 
+// Query middleware
 func Query() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		core := CoreQuery{}
-		core.skip = toInt(c.Query("skip"), 0)
-		core.limit = toInt(c.Query("limit"), 20)
-		core.sort = c.Query("sort")
-		core.datefrom = c.Query("datefrom")
-		core.dateto = c.Query("dateto")
-		c.Set("Query", core)
+		q := CoreQuery{}
+		q.skip = toInt(c.Query("skip"), 0)
+		q.limit = toInt(c.Query("limit"), 20)
+		q.sort = c.Query("sort")
+		q.datefrom = c.Query("datefrom")
+		q.dateto = c.Query("dateto")
+		c.Set("Query", q)
 		c.Next()
 	}
 }

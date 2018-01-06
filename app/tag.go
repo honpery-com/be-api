@@ -1,28 +1,20 @@
 package app
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 
-// GetTags [GET] /tags
-func GetTags(c *gin.Context) {
-
-}
-
-// GetTag [GET] /tags/:tag_id
-func GetTag(c *gin.Context) {
+// GetTagList controller
+func GetTagList(c *gin.Context) {
 
 }
 
-// PostTag [POST] /tags
-func PostTag(c *gin.Context) {
+// CreateTag controller
+func CreateTag(c *gin.Context) {
 
 }
 
-// PutTag [PUT] /tags/:tag_id
-func PutTag(c *gin.Context) {
-
-}
-
-// DeleteTag [DELETE] /tags/:tag_id
-func DeleteTag(c *gin.Context) {
+// UpdateTag controller
+func UpdateTag(c *gin.Context) {
 
 }
